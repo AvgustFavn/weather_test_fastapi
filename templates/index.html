@@ -28,7 +28,12 @@
 
 <form method="post">
     <select name='city' id="city">
-        <option value="0">Choose city</option>
+    {% if last_city %}
+    <option value="{{ last_city }}">{{ last_city }}</option>
+    {% else %}
+    <option value="0">Choose city</option>
+    {% endif %}
+
         {% for c in cities %}
         <option name="city" value="{{c}}">{{c}}</option>
         {% endfor %}
@@ -43,6 +48,15 @@
   {{result|safe}}
     {% endif %}
 </div>
+
+{% if search_history %}
+<h3>История поиска:</h3>
+<ul>
+{% for city in search_history.split(",") if city %}
+    <li>{{ city }}</li>
+{% endfor %}
+</ul>
+{% endif %}
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script>
